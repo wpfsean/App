@@ -1,2 +1,1 @@
-# linphoneTest
-linphongSDK测试修正代码。
+基于linphone实现主意通话
