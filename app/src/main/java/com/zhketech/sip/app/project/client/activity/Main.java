@@ -110,7 +110,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     String rtsp = "";
     String rtsp1 = "";
 
-    int num =1;
+    int num = 1;
 
     /**
      * 接收子线程发来的消息
@@ -143,10 +143,11 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     List<VideoBen> mList = (List<VideoBen>) msg.obj;
                     if (mList != null && mList.size() > 0) {
                         videoResources = mList;
+                        Logutils.i("videoResources:" + videoResources.size());
                     }
                     if (videoResources != null && videoResources.size() > 0) {
                         for (VideoBen v : videoResources) {
-                            Logutils.i("v:"+v.toString());
+                            Logutils.i("v:" + v.toString());
                             resolveRtspUrl(v);
                         }
                     } else {
@@ -156,8 +157,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     break;
 
                 case 1001: //获取带rtsp的videoResources
-
-                 //   Logutils.i("解析Rtsping...."+num++);
                     //通过bundle获取数据
                     Bundle bundle = msg.getData();
                     String url = bundle.getString("url");
@@ -172,30 +171,25 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                             String footer = flage[1];
                             String newUrl = header + "//" + v.getUsername() + ":" + v.getPassword() + "@" + footer;
                             rtsp = newUrl;
-                         //   Logutils.i("new Url:"+newUrl);
                         }
                     } else {
-                     //   Logutils.i("new Url:"+"未获取到资源");
-                        //未解析到rtsp时就添加一个默认的rtsp(方便测试)
                         rtsp = "rtsp://admin:pass@192.168.0.93:554/H264?ch=1&subtype=1&proto=Onvif";
                     }
 
-                    if (device.isSuporrtPtz() == true){
+                    if (device.isSuporrtPtz() == true) {
                         v.setPtz_url(device.getPtz_url());
                         v.setSuporrtPtz(true);
                     }
-                    Logutils.i("token:"+device.getToken());
+                    Logutils.i("token:" + device.getToken());
                     v.setToken(device.getToken());
                     v.setRtsp(rtsp);
                     videoListResourcesRtsp.add(v);
                     if (videoListResourcesRtsp.size() == videoResources.size()) {
-                     //   Logutils.i("Tag:" + "哈哈，把rtsp解析完了--------" + new Date().toString());
-                       // Logutils.i("Tag:" + "哈哈，把rtsp解析完了--------" + videoListResourcesRtsp.toString());
                         Gson gson = new Gson();
                         String json1 = gson.toJson(videoListResourcesRtsp);
                         if (json1 != null && !TextUtils.isEmpty(json1)) {
                             SharedPreferencesUtils.putObject(mContext, "video_result", json1);
-                            Logutils.i("video资源已保存"+videoListResourcesRtsp.toString());
+                            Logutils.i("video资源已保存" + videoListResourcesRtsp.toString());
                         } else {
                             Logutils.i("Tag:" + "video未添加到本地");
                         }
@@ -206,12 +200,12 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     List<SipBean> sipBeansList = (List<SipBean>) msg.obj;
                     if (sipBeansList != null && sipBeansList.size() > 0) {
                         sipResources = sipBeansList;
-                        Logutils.i("sipResources...."+sipResources.size());
-                      //  Logutils.i("can register sip");
-                        registeSipToServer();
-                        for (SipBean s : sipResources) {
-                           // Logutils.i("s:"+s.toString());
-                            resolveSipRtspUrl(s);
+                        Logutils.i("sipResources...." + sipResources.size());
+                        if (sipResources != null && sipResources.size() > 0) {
+                            registeSipToServer();
+                            for (SipBean s : sipResources) {
+                                resolveSipRtspUrl(s);
+                            }
                         }
                     } else {
                         Logutils.i("未解析到sip资源");
@@ -245,7 +239,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                         //未解析到rtsp时就添加一个默认的rtsp(方便测试)
                         rtsp1 = "rtsp://admin:pass@192.168.0.93:554/H264?ch=1&subtype=1&proto=Onvif";
                     }
-                    if (sipDevice.isSuporrtPtz() == true){
+                    if (sipDevice.isSuporrtPtz() == true) {
                         mSipbean.setSuporrtPtz(true);
                         mSipbean.setPtz_url(sipDevice.getPtz_url());
                     }
@@ -253,13 +247,13 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     mSipbean.setRtsp(rtsp1);
                     sipListResourcesRtsp.add(mSipbean);
                     if (sipResources.size() == sipListResourcesRtsp.size()) {
-                      //  Logutils.i("Tag:" + "哈哈，把Sip的rtsp解析完了------" + new Date().toString());
-                       // Logutils.i("Tag:" + "哈哈，把Sip的rtsp解析完了------" + sipListResourcesRtsp.toString());
+                        //  Logutils.i("Tag:" + "哈哈，把Sip的rtsp解析完了------" + new Date().toString());
+                        // Logutils.i("Tag:" + "哈哈，把Sip的rtsp解析完了------" + sipListResourcesRtsp.toString());
                         Gson gson = new Gson();
                         String json2 = gson.toJson(sipListResourcesRtsp);
                         if (json2 != null && !TextUtils.isEmpty(json2))
                             SharedPreferencesUtils.putObject(mContext, "sip_result", json2);
-                        Logutils.i("sip资源已保存"+sipListResourcesRtsp.toString());
+                        Logutils.i("sip资源已保存" + sipListResourcesRtsp.toString());
                         //LogU.info(sipListResourcesRtsp.toString());
                     } else {
                         //Logutils.i("Tag:" + "Sip资源未添加到本地");
@@ -269,7 +263,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 case AppConfig.GET_AMMOREQUEST_INFOR:
 
                     String result = (String) msg.obj;
-                    Toast.makeText(Main.this,"开锁信息:"+result,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Main.this, "开锁信息:" + result, Toast.LENGTH_SHORT).show();
 
 
                     break;
@@ -320,8 +314,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     /**
      * 解析rtsp(根据deviceType: ONVIF　ＲTSP )
      */
-    public  synchronized void resolveRtspUrl(final VideoBen v) {
-        if (v.getDevicetype().equals("ONVIF")){
+    public synchronized void resolveRtspUrl(final VideoBen v) {
+        if (v.getDevicetype().equals("ONVIF")) {
             DeviceInfor deviceInfor = new DeviceInfor();
             deviceInfor.setUsername(v.getUsername());
             deviceInfor.setPassword(v.getPassword());
@@ -342,17 +336,16 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 }
             });
             resolveRtsp.start();
-        }else if (v.getDevicetype().equals("RTSP")){
-            String rtsp_url = "rtsp://"+v.getUsername()+":"+v.getPassword()+"@"+v.getIp()+":"+v.getPort()+"/"+v.getChannel();
+        } else if (v.getDevicetype().equals("RTSP")) {
+            String rtsp_url = "rtsp://" + v.getUsername() + ":" + v.getPassword() + "@" + v.getIp() + ":" + v.getPort() + "/" + v.getChannel();
             Message message = new Message();
             message.what = 1003;
             Bundle bundle = new Bundle();
-            bundle.putString("rtsp_url",rtsp_url);
-            bundle.putSerializable("videobean",v);
+            bundle.putString("rtsp_url", rtsp_url);
+            bundle.putSerializable("videobean", v);
             message.setData(bundle);
             handler.sendMessage(message);
         }
-
 
 
     }
@@ -394,7 +387,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     private void initPageData() {
         String native_ip = PhoneUtils.displayIpAddress(mContext);
         if (!TextUtils.isEmpty(native_ip) && native_ip != null) {
-            SharedPreferencesUtils.putObject(mContext,AppConfig.IP_NAVITE,native_ip);
+            SharedPreferencesUtils.putObject(mContext, AppConfig.IP_NAVITE, native_ip);
         } else {
             Logutils.i("未获取到本机的ip信息");
         }
@@ -511,28 +504,29 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
      * 注册sip到服务器
      */
     private void registeSipToServer() {
-            String phoneIp = (String) SharedPreferencesUtils.getObject(mContext,AppConfig.IP_NAVITE,"");
-            if (!TextUtils.isEmpty(phoneIp) && phoneIp != "") {
-                for (SipBean s : sipResources) {
-                    if (s.getIp().equals(phoneIp)) {
-                        String sipNumber = s.getNumber();
-                        String sipServer = s.getSipserver();
-                        String sipName = s.getSipname();
-                        String sipPass = s.getSippass();
+        String phoneIp = (String) SharedPreferencesUtils.getObject(mContext, AppConfig.IP_NAVITE, "");
+        Logutils.i("phone_ip");
+        if (!TextUtils.isEmpty(phoneIp) && phoneIp != "") {
+            for (SipBean s : sipResources) {
+                if (s.getIp().equals(phoneIp)) {
+                    String sipNumber = s.getNumber();
+                    String sipServer = s.getSipserver();
+                    String sipName = s.getSipname();
+                    String sipPass = s.getSippass();
 
-                        if (!TextUtils.isEmpty(sipServer) && !TextUtils.isEmpty(sipName) && !TextUtils.isEmpty(sipPass)) {
+                    if (!TextUtils.isEmpty(sipServer) && !TextUtils.isEmpty(sipName) && !TextUtils.isEmpty(sipPass)) {
 
-                        } else {
-                            Logutils.i("信息缺失");
-                        }
-                        break;
                     } else {
-                        //   Logutils.i("未获取到为本机注册的信息");
+                        Logutils.i("信息缺失");
                     }
+                    break;
+                } else {
+                    //   Logutils.i("未获取到为本机注册的信息");
                 }
-            } else {
-                Logutils.i("未获取到本机的ip");
             }
+        } else {
+            Logutils.i("未获取到本机的ip");
+        }
     }
 
     @Override
@@ -576,7 +570,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         /**
          * 获取Video资源列表
          */
-        RequestVideoSourcesThread requestVideoSourcesThread = new RequestVideoSourcesThread(mContext,new RequestVideoSourcesThread.GetDataListener() {
+        RequestVideoSourcesThread requestVideoSourcesThread = new RequestVideoSourcesThread(mContext, new RequestVideoSourcesThread.GetDataListener() {
             @Override
             public void getResult(List<VideoBen> devices) {
                 Message message = new Message();
@@ -590,7 +584,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         /**
          * 获取Sip资源列表
          */
-        SipRequestCallback sipRequestCallback = new SipRequestCallback(mContext,new SipRequestCallback.SipListern() {
+        SipRequestCallback sipRequestCallback = new SipRequestCallback(mContext, new SipRequestCallback.SipListern() {
             @Override
             public void getDataListern(List<SipBean> mList) {
                 Message message = new Message();
@@ -699,7 +693,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                             Logutils.i("AmmoRequest_error:" + error);
                         }
                     }
-                },mContext);
+                }, mContext);
                 ammoRequestCallBack.start();
                 break;
         }
@@ -724,8 +718,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             } while (true);
         }
     }
-
-
 
 
 }

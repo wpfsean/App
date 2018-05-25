@@ -67,7 +67,7 @@ public class RequestVideoSourcesThread extends Thread {
             is = socket.getInputStream();
             bos = new ByteArrayOutputStream();
             //获取前8个byte
-            byte[] headers = new byte[184];
+            byte[] headers = new byte[188];
             int read = is.read(headers);
             //获取前4个，获取头文件
             byte[] flag = new byte[4];

@@ -7,6 +7,7 @@ import com.zhketech.sip.app.project.client.beans.SipBean;
 import com.zhketech.sip.app.project.client.beans.VideoBen;
 import com.zhketech.sip.app.project.client.global.AppConfig;
 import com.zhketech.sip.app.project.client.utils.ByteUtils;
+import com.zhketech.sip.app.project.client.utils.Logutils;
 import com.zhketech.sip.app.project.client.utils.SharedPreferencesUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -69,7 +70,7 @@ public class SipRequestCallback implements Runnable {
             os.flush();
             is = socket.getInputStream();
             bos = new ByteArrayOutputStream();
-            byte[] headers = new byte[8 + 48];
+            byte[] headers = new byte[60];
             int read = is.read(headers);
             // 解析数据头
             byte[] flag = new byte[4];
@@ -113,6 +114,13 @@ public class SipRequestCallback implements Runnable {
                 sips[i] = headers[i + 52];
             }
             int sipCounts = sips[0];
+
+            byte[] groupid = new byte[4];
+            for (int i = 0; i < 4; i++) {
+                groupid[i] = headers[i + 56];
+            }
+            Logutils.i("group_id:"+groupid[0]);
+
             // 数据总长度(通过文档计算每个数据的总长度264)
             int alldata = 660 * sipCounts;
             byte[] buffer = new byte[1024];
@@ -228,6 +236,8 @@ public class SipRequestCallback implements Runnable {
                             sipNumberString, "", "", "", videoBen, "",false,"","");
                     sipSources.add(sipBen);
                 }
+
+
             }
             if (sipSources.size() > 0) {
                 if (listern != null) {
