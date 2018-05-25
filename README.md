@@ -1,1 +1,1 @@
-基于linphone实现主意通话
+基于linphone实现语音通话
