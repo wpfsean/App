@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/show_information_register"
+                android:layout_width="fill_parent"
+                android:layout_height="250dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/register_sip_bg"
+                android:padding="10dp"
+                android:text="" />
+
+            <Button
+                android:id="@+id/register_sip"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/register_sip_bg"
+                android:gravity="center"
+                android:text="手动注册Sip" />
+
+            <Button
+                android:id="@+id/setting_permission"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/register_sip_bg"
+                android:text="查看权限信息" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

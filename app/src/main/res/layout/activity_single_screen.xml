@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_relativelayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/icone_relativtelayout_title"
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+
+        <ImageView
+            android:id="@+id/plicemen_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/picture_badges" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/plicemen_icon"
+            android:text="便携式移动哨位台"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/icon_network"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dp"
+            android:background="@mipmap/icon_network" />
+
+        <ImageView
+            android:id="@+id/icon_electritity_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dp"
+            android:layout_toLeftOf="@+id/icon_network"
+            android:background="@mipmap/icon_electricity_a" />
+
+        <ImageView
+            android:id="@+id/icon_connection_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dp"
+            android:layout_toLeftOf="@+id/icon_electritity_show"
+            android:background="@mipmap/icon_connection_normal" />
+    </RelativeLayout>
+
+    <!--四个surfaceview所在的布局-->
+
+    <!--一个surfaceview所在的布局-->
+    <RelativeLayout
+        android:id="@+id/single_surfaceview_parent_relativelayout"
+        android:layout_width="494dp"
+        android:layout_height="326dp"
+        android:layout_below="@+id/icone_relativtelayout_title"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:id="@+id/single_surfaceview_relativelayout"
+            android:layout_width="494dp"
+            android:layout_height="302dp"
+            android:background="@drawable/video_relativelayout_bg_shape">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp">
+
+
+
+                <cn.nodemedia.NodePlayerView
+                    android:id="@+id/single_vew"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></cn.nodemedia.NodePlayerView>
+
+            </FrameLayout>
+
+            <ProgressBar
+                android:id="@+id/single_first_progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:id="@+id/single_first_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Loading...."
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </RelativeLayout>
+        <!--surfaceview下面所显示的数据-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/single_surfaceview_relativelayout">
+
+            <TextView
+                android:id="@+id/show_surfaceview_information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:text="哨位台一号监控"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="407dp"
+                android:background="@mipmap/btn_screenshots" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <!--最右侧的功能 键的布局-->
+
+    <RelativeLayout
+        android:id="@+id/right_relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/icone_relativtelayout_title"
+        android:layout_marginLeft="1dp"
+        android:layout_toRightOf="@+id/single_surfaceview_parent_relativelayout"
+        android:background="@drawable/relativelayout_bg_shape">
+
+        <RelativeLayout
+            android:id="@+id/show_relativelayout_all_button"
+            android:layout_width="match_parent"
+            android:layout_height="135dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:id="@+id/icone_relativtelayout_horizontal_one"
+                android:layout_width="fill_parent"
+                android:layout_height="41dp"
+                android:layout_centerHorizontal="true">
+
+                <ImageButton
+                    android:id="@+id/icon_btn1"
+                    android:layout_width="41dp"
+                    android:layout_height="41dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/btn_foursplitscreen_select" />
+
+                <ImageButton
+                    android:id="@+id/icon_btn2"
+                    android:layout_width="41dp"
+                    android:layout_height="41dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/icon_btn1"
+                    android:background="@drawable/btn_amplification_select" />
+
+                <ImageButton
+                    android:id="@+id/icon_btn3"
+                    android:layout_width="41dp"
+                    android:layout_height="41dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/icon_btn2"
+                    android:background="@drawable/btn_list_select" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/icone_relativtelayout_horizontal_two"
+                android:layout_width="fill_parent"
+                android:layout_height="41dp"
+                android:layout_below="@+id/icone_relativtelayout_horizontal_one"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="6dp">
+
+                <ImageButton
+                    android:id="@+id/icon_btn4"
+                    android:layout_width="41dp"
+                    android:layout_height="41dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/btn_left_select" />
+
+                <ImageButton
+                    android:id="@+id/icon_btn5"
+                    android:layout_width="41dp"
+                    android:layout_height="41dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/icon_btn4"
+                    android:background="@drawable/btn_refresh_select" />
+
+                <ImageButton
+                    android:id="@+id/icon_btn6"
+                    android:layout_width="41dp"
+                    android:layout_height="41dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/icon_btn5"
+                    android:background="@drawable/btn_right_select" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/icone_relativtelayout_horizontal_three"
+                android:layout_width="fill_parent"
+                android:layout_height="41dp"
+                android:layout_below="@+id/icone_relativtelayout_horizontal_two"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="6dp">
+
+                <ImageButton
+                    android:id="@+id/icon_btn7"
+                    android:layout_width="41dp"
+                    android:layout_height="41dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/btn_alarm_select" />
+
+                <ImageButton
+                    android:id="@+id/icon_btn8"
+                    android:layout_width="41dp"
+                    android:layout_height="41dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/icon_btn7"
+                    android:background="@drawable/btn_stopplay_select" />
+
+                <ImageButton
+                    android:id="@+id/icon_btn9"
+                    android:layout_width="41dp"
+                    android:layout_height="41dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/icon_btn8"
+                    android:background="@drawable/btn_return_select" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativelayout_control"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/show_relativelayout_all_button"
+            android:layout_marginTop="15dp"
+            android:visibility="visible">
+
+
+            <RelativeLayout
+                android:id="@+id/direction_show_relativelayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/show_button_home_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@mipmap/btn_bg" />
+
+                <ImageButton
+                    android:id="@+id/button_down_show"
+                    android:layout_width="33dp"
+                    android:layout_height="17dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="9dp"
+                    android:background="@drawable/btn_down_select" />
+
+
+                <ImageButton
+                    android:id="@+id/button_up_show"
+                    android:layout_width="33dp"
+                    android:layout_height="17dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="90dp"
+                    android:background="@drawable/btn_up_select" />
+
+                <ImageButton
+                    android:id="@+id/button_left_show"
+                    android:layout_width="17dp"
+                    android:layout_height="33dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/button_left_select" />
+
+                <ImageButton
+                    android:id="@+id/button_right_show"
+                    android:layout_width="17dp"
+                    android:layout_height="33dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="106dp"
+                    android:background="@drawable/button_right_select" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/direction_show_relativelayout"
+                android:layout_centerInParent="true">
+
+                <ImageButton
+                    android:id="@+id/button_enlarge_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/btn_enlarge_select" />
+
+
+                <ImageButton
+                    android:id="@+id/button_narrow_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/button_enlarge_show"
+                    android:background="@drawable/btn_narrow_select" />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativelayout_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ListView
+                android:id="@+id/show_listresources"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true">
+
+            </ListView>
+
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

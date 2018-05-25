@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://C:\Users\Root\Desktop\linphoneTest-master\linphoneTest-master\YYTCallPhoneDemoApplication.iml" filepath="C:\Users\Root\Desktop\linphoneTest-master\linphoneTest-master\YYTCallPhoneDemoApplication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/linphoneTest-master.iml" filepath="$PROJECT_DIR$/linphoneTest-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nodemediaclient/nodemediaclient.iml" filepath="$PROJECT_DIR$/nodemediaclient/nodemediaclient.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">App</string>
+    <string name="status_connected">Registered</string>
+    <string name="status_not_connected">Not registered</string>
+    <string name="status_in_progress">Registration in progress</string>
+    <string name="status_error">Registration failed</string>
+    <string name="voicemail_unread"> unread messages</string>
+
+</resources>
