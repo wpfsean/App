@@ -51,36 +51,33 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".service.SendheartService"></service>
-        <receiver android:name=".service.HttpRequest"></receiver>
+        <service android:name=".service.SendheartService" />
+
+        <receiver android:name=".service.HttpRequest" />
 
         <activity android:name=".activity.SingleCallActivity" />
-        <activity android:name=".activity.StatusActivity"></activity>
-
+        <activity android:name=".activity.StatusActivity" />
         <activity
             android:name=".activity.SipGroupActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="landscape"></activity>
-
-        <activity android:name=".activity.WellcomeActivity"></activity>
-
-
+            android:screenOrientation="landscape" />
+        <activity android:name=".activity.WellcomeActivity" />
         <activity
             android:name=".activity.MultiScreenActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"></activity>
-
+            android:screenOrientation="landscape" />
         <activity
             android:name=".activity.SingleScreenActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="landscape"></activity>
-
-
+            android:screenOrientation="landscape" />
         <activity
             android:name=".activity.SettingActivity"
             android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.SipInforActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"></activity>
-
     </application>
 
 </manifest>

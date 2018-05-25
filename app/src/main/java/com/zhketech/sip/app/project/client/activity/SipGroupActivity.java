@@ -1,6 +1,7 @@
 package com.zhketech.sip.app.project.client.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,10 +14,15 @@ import android.view.WindowManager;
 import android.widget.GridLayout;
 import com.zhketech.sip.app.project.client.R;
 import com.zhketech.sip.app.project.client.adapter.RecyclerViewGridAdapter;
+import com.zhketech.sip.app.project.client.beans.SipBean;
 import com.zhketech.sip.app.project.client.beans.SipClient;
+import com.zhketech.sip.app.project.client.beans.SipGroupBean;
+import com.zhketech.sip.app.project.client.callbacks.SipGroupResourcesCallback;
+import com.zhketech.sip.app.project.client.callbacks.SipRequestCallback;
 import com.zhketech.sip.app.project.client.utils.Logutils;
 import com.zhketech.sip.app.project.client.utils.SipHttpUtils;
 import com.zhketech.sip.app.project.client.utils.SpaceItemDecoration;
+import com.zhketech.sip.app.project.client.utils.ToastUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,11 +45,9 @@ public class SipGroupActivity extends AppCompatActivity {
     @BindView(R.id.sip_group_recyclearview)
     public RecyclerView sip_group_recyclearview;
     Context mContext;
-
-    public static final String SIP_LIST = "http://192.168.0.60:8080/openapi/localuser/list?{%22syskey%22:%22123456%22}";
-    List<SipClient> mList = new ArrayList<>();
-
+    List<SipGroupBean> mList = new ArrayList<>();
     SpaceItemDecoration sp;
+    boolean isShowGrouLayout = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,51 +74,48 @@ public class SipGroupActivity extends AppCompatActivity {
             mList.clear();
         }
 
-        SipHttpUtils sipHttpUtils = new SipHttpUtils(SIP_LIST, new SipHttpUtils.GetHttpData() {
+        SipGroupResourcesCallback sipGroupResourcesCallback = new SipGroupResourcesCallback(new SipGroupResourcesCallback.SipGroupDataCallback() {
             @Override
-            public void httpData(String result) {
-                if (!TextUtils.isEmpty(result)) {
-                    if (!result.contains("Execption") && !result.contains("code != 200")) {
-                        try {
-                            JSONArray jsonArray = new JSONArray(result);
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                String username = jsonObject.getString("usrname");
-                                String description = jsonObject.getString("description");
-                                String dispname = jsonObject.getString("dispname");
-                                String addr = jsonObject.getString("addr");
-                                String state = jsonObject.getString("state");
-                                String userAgent = jsonObject.getString("userAgent");
-                                SipClient sipClient = new SipClient(username, description, dispname, addr, state, userAgent);
-                                mList.add(sipClient);
-                            }
-                            Logutils.i("Mlist:" + mList.toString());
-                            runOnUiThread(new Runnable() {
+            public void callbackSuccessData(List<SipGroupBean> dataList) {
+                if (dataList != null && dataList.size()>0){
+                        mList = dataList;
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            RecyclerViewGridAdapter recyclerViewGridAdapter = new RecyclerViewGridAdapter(mContext, mList);
+                            sip_group_recyclearview.setAdapter(recyclerViewGridAdapter);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3);
+                            gridLayoutManager.setReverseLayout(false);
+                            gridLayoutManager.setOrientation(GridLayout.VERTICAL);
+                            sip_group_recyclearview.addItemDecoration(sp);
+                            sip_group_recyclearview.setLayoutManager(gridLayoutManager);
+                            recyclerViewGridAdapter.setItemClickListener(new RecyclerViewGridAdapter.MyItemClickListener() {
                                 @Override
-                                public void run() {
-                                    RecyclerViewGridAdapter recyclerViewGridAdapter = new RecyclerViewGridAdapter(mContext, mList);
-                                    sip_group_recyclearview.setAdapter(recyclerViewGridAdapter);
-                                    GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3);
-                                    gridLayoutManager.setReverseLayout(false);
-                                    gridLayoutManager.setOrientation(GridLayout.VERTICAL);
-                                    sip_group_recyclearview.addItemDecoration(sp);
-                                    sip_group_recyclearview.setLayoutManager(gridLayoutManager);
-                                    recyclerViewGridAdapter.setItemClickListener(new RecyclerViewGridAdapter.MyItemClickListener() {
-                                        @Override
-                                        public void onItemClick(View view, int position) {
-                                            Logutils.i("positon:" + position);
-                                        }
-                                    });
+                                public void onItemClick(View view, int position) {
+                                    Logutils.i("positon:" + position);
+                                    int group_id= mList.get(position).getGroup_id();
+                                    Intent intent = new Intent();
+                                    intent.putExtra("group_id",group_id);
+                                    intent.setClass(SipGroupActivity.this,SipInforActivity.class);
+                                    startActivity(intent);
                                 }
                             });
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
+                    });
+                }
+            }
+            @Override
+            public void callbackFailData(String infor) {
+                if (!TextUtils.isEmpty(infor)){
+                    if (infor.contains("Execption")){
+  //                      ToastUtils.showShort("请求数据异常,未请求到数据");
                     }
                 }
             }
         });
-        sipHttpUtils.start();
+        sipGroupResourcesCallback.start();
+        isShowGrouLayout = true;
+
     }
 
 

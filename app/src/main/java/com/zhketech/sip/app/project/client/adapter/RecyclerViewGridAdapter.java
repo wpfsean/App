@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.zhketech.sip.app.project.client.R;
 import com.zhketech.sip.app.project.client.beans.SipClient;
+import com.zhketech.sip.app.project.client.beans.SipGroupBean;
 
 import java.util.List;
 
@@ -17,10 +18,10 @@ import java.util.List;
 
 public class RecyclerViewGridAdapter extends RecyclerView.Adapter<RecyclerViewGridAdapter.GridViewHolder> {
     private Context mContext;
-    private List<SipClient> mDateBeen;
+    private List<SipGroupBean> mDateBeen;
     private MyItemClickListener mItemClickListener;
 
-    public RecyclerViewGridAdapter(Context context, List<SipClient> dateBeen) {
+    public RecyclerViewGridAdapter(Context context, List<SipGroupBean> dateBeen) {
         mContext = context;
         mDateBeen = dateBeen;
     }
@@ -34,7 +35,7 @@ public class RecyclerViewGridAdapter extends RecyclerView.Adapter<RecyclerViewGr
 
     @Override
     public void onBindViewHolder(GridViewHolder holder, int position) {
-        SipClient dateBean = mDateBeen.get(position);
+        SipGroupBean dateBean = mDateBeen.get(position);
         holder.setData(dateBean);
     }
 
@@ -62,8 +63,8 @@ public class RecyclerViewGridAdapter extends RecyclerView.Adapter<RecyclerViewGr
 
         }
 
-        public void setData(SipClient data) {
-            item_title.setText(data.getUsrname());
+        public void setData(SipGroupBean data) {
+            item_title.setText(data.getGroup_name());
         }
 
         @Override

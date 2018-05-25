@@ -584,7 +584,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         /**
          * 获取Sip资源列表
          */
-        SipRequestCallback sipRequestCallback = new SipRequestCallback(mContext, new SipRequestCallback.SipListern() {
+        SipRequestCallback sipRequestCallback = new SipRequestCallback(mContext,"0", new SipRequestCallback.SipListern() {
             @Override
             public void getDataListern(List<SipBean> mList) {
                 Message message = new Message();
@@ -642,7 +642,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.button_intercom:
-                intent.setClass(mContext, WellcomeActivity.class);
+                intent.setClass(mContext, SipGroupActivity.class);
                 mContext.startActivity(intent);
                 mVibrator.vibrate(200);
                 break;

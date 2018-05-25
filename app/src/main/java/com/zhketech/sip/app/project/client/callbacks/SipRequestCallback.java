@@ -30,10 +30,12 @@ public class SipRequestCallback implements Runnable {
     SipListern listern;
     List<SipBean> sipSources = new ArrayList<SipBean>();
     Context mContext;
+    String type;
 
     // 构造对象
-    public SipRequestCallback( Context mContext,SipListern listern) {
+    public SipRequestCallback( Context mContext, String type,SipListern listern) {
         this.mContext = mContext;
+        this.type = type;
         this.listern = listern;
 
     }
@@ -59,7 +61,7 @@ public class SipRequestCallback implements Runnable {
             bys[6] = 0;
             bys[7] = 0;
 
-            String name = "admin" + "/" + "pass" + "/"+ SharedPreferencesUtils.getObject(mContext, AppConfig.IP_NAVITE,"");
+            String name = "admin" + "/" + "pass" + "/"+ SharedPreferencesUtils.getObject(mContext, AppConfig.IP_NAVITE,"")+"/"+type;
             byte[] na = name.getBytes("GB2312");
             for (int i = 0; i < na.length; i++) {
                 bys[i + 8] = na[i];
@@ -119,7 +121,6 @@ public class SipRequestCallback implements Runnable {
             for (int i = 0; i < 4; i++) {
                 groupid[i] = headers[i + 56];
             }
-            Logutils.i("group_id:"+groupid[0]);
 
             // 数据总长度(通过文档计算每个数据的总长度264)
             int alldata = 660 * sipCounts;

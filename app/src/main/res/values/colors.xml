@@ -7,4 +7,6 @@
     <color name="control_line_color">#21baff</color>
     <color name="video_color">#084c61</color>
     <color name="sip_group_text_color">#31e1f8</color>
+    <color name="notline">#929393</color>
+    <color name="bg">#2D4A63</color>
 </resources>

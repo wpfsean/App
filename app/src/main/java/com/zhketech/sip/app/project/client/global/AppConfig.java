@@ -1,5 +1,7 @@
 package com.zhketech.sip.app.project.client.global;
 
+import com.zhketech.sip.app.project.client.utils.PhoneUtils;
+
 /**
  * Created by Root on 2018/5/16.
  */
@@ -28,6 +30,10 @@ public class AppConfig {
     //获取Sip资源的标识
     public static final int SIP_SOURCES_FLAGE= 5;
 
+
+
+    public static final String USERNAME = "admin";
+    public static final String PASS = "pass";
 
 
 
