@@ -206,9 +206,11 @@ public class SipInforActivity extends AppCompatActivity implements View.OnClickL
             case R.id.voice_intercom_icon_layout://语音对讲
 
                 intent.putExtra("isCall", true);
-                if (adapterList.get(sip_position) != null)
-                    intent.putExtra("userName", adapterList.get(sip_position).getUsrname());
-                startActivity(intent);
+                if (adapterList.get(sip_position) != null) {
+                    if (adapterList.get(sip_position) != null)
+                        intent.putExtra("userName", adapterList.get(sip_position).getUsrname());
+                    startActivity(intent);
+                }
 
                 break;
             case R.id.video_intercom_layout://可视对讲
