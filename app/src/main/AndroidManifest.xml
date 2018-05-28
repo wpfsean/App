@@ -58,6 +58,7 @@
         <service android:name=".rtsp.RtspReceiveService"
             android:enabled="true"
             android:exported="true"></service>
+        <service android:name=".rtsp.RtspServer"/>
 
         <activity
             android:name=".activity.SingleCallActivity"
