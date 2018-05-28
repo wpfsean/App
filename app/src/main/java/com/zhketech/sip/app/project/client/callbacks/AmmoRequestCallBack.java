@@ -91,15 +91,16 @@ public class AmmoRequestCallBack implements Runnable {
                 }
 
                 int status = ByteUtils.bytesToInt(action, 0);
-                AppConfig.BOX_STATUS = status;
                 Logutils.i("开箱状态：" + status);
 
                 if (listern != null){
+                    SharedPreferencesUtils.putObject(mContext,AppConfig.BOX_STATUS,status+"");
                     listern.onSuccess(status+"");
                 }
             } catch (Exception e) {
 
                 if (listern != null){
+                    SharedPreferencesUtils.putObject(mContext,AppConfig.BOX_STATUS,"Exception:"+e.getMessage()+"");
                     listern.onError("Exception:"+e.getMessage());
                 }
             } finally {

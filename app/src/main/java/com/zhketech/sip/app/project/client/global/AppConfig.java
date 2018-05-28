@@ -38,7 +38,7 @@ public class AppConfig {
 
 
     //子弹箱的状态
-    public static  int BOX_STATUS = 0;
+    public static  final String BOX_STATUS = "box_status";
 
     //服务器返回的报警状态
     public static  int ALARM_STATUS = 0;

@@ -64,19 +64,20 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     protected void onStart() {
         super.onStart();
         stringBuilder.append(
-                "本机信息：\n sip_Name:" + SharedPreferencesUtils.getObject(mContext, AppConfig.SIP_NAME_NAVITE,"")
-                + "\n sip_Number:" + SharedPreferencesUtils.getObject(mContext,AppConfig.SIP_NUMBER_NAVITE,"")
-                + "\n sip_Pass:" + SharedPreferencesUtils.getObject(mContext,AppConfig.SIP_PASS_NAVITE,"")
-                + "\n 本机Ip:" + SharedPreferencesUtils.getObject(mContext,AppConfig.IP_NAVITE,"")
-                + "\n 服务器Ip:" + AppConfig.IP_SERVER
-                + "\n Sip服务器Ip：" + SharedPreferencesUtils.getObject(mContext,AppConfig.SIP_SERVER,"")
-                +"\n 本机Rtsp:"+ SharedPreferencesUtils.getObject(mContext,AppConfig.NATIVE_RTSP,"")
-                + "\n 开锁信息:" + AppConfig.BOX_STATUS
-                + "\n 最后报警状态：" + AppConfig.ALARM_STATUS
-                + "\n 本机的Guiid：" + SharedPreferencesUtils.getObject(mContext,AppConfig.GUID_NATIVE,"")
-                + "\n 本机Name：" +SharedPreferencesUtils.getObject(mContext, AppConfig.NAME_NATIVE,"")
+                "本机信息：\n sip_Name:" + SharedPreferencesUtils.getObject(mContext, AppConfig.SIP_NAME_NAVITE, "")
+                        + "\n sip_Number:" + SharedPreferencesUtils.getObject(mContext, AppConfig.SIP_NUMBER_NAVITE, "")
+                        + "\n sip_Pass:" + SharedPreferencesUtils.getObject(mContext, AppConfig.SIP_PASS_NAVITE, "")
+                        + "\n 本机Ip:" + SharedPreferencesUtils.getObject(mContext, AppConfig.IP_NAVITE, "")
+                        + "\n 服务器Ip:" + AppConfig.IP_SERVER
+                        + "\n Sip服务器Ip：" + SharedPreferencesUtils.getObject(mContext, AppConfig.SIP_SERVER, "")
+                        + "\n 本机Rtsp:" + SharedPreferencesUtils.getObject(mContext, AppConfig.NATIVE_RTSP, "")
+                        + "\n 开锁信息:" + SharedPreferencesUtils.getObject(mContext, AppConfig.BOX_STATUS, "")
+                        + "\n 最后报警状态：" + AppConfig.ALARM_STATUS
+                        + "\n 本机的Guiid：" + SharedPreferencesUtils.getObject(mContext, AppConfig.GUID_NATIVE, "")
+                        + "\n 本机Name：" + SharedPreferencesUtils.getObject(mContext, AppConfig.NAME_NATIVE, "")
         );
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -97,8 +98,6 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         setting_permission.setOnClickListener(this);
         stringBuilder = new StringBuilder();
     }
-
-
 
 
     @Override

@@ -88,6 +88,9 @@
             android:launchMode="singleTask"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"></activity>
+
+
+
     </application>
 
 </manifest>
