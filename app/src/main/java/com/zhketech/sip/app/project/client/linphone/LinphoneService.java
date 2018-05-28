@@ -30,7 +30,7 @@ import org.linphone.core.Reason;
  */
 public class LinphoneService extends Service implements LinphoneCoreListener.LinphoneCallStateListener,
         LinphoneCoreListener.LinphoneGlobalStateListener, LinphoneCoreListener.LinphoneRegistrationStateListener {
-
+    AlertDialog alert;
     final String TAG = getClass().getSimpleName();
     private PendingIntent mkeepAlivePendingIntent;
     private static LinphoneService instance;
@@ -107,6 +107,7 @@ public class LinphoneService extends Service implements LinphoneCoreListener.Lin
             if (null != mPhoneServiceCallBack) {
                 mPhoneServiceCallBack.callReleased();
             }
+            alert.dismiss();
         }
 
         if (state == LinphoneCall.State.OutgoingRinging) {
@@ -118,6 +119,8 @@ public class LinphoneService extends Service implements LinphoneCoreListener.Lin
             if (null != mPhoneServiceCallBack) {
                 mPhoneServiceCallBack.callhangup();
             }
+            alert.dismiss();
+
         }
     }
 
@@ -130,7 +133,7 @@ public class LinphoneService extends Service implements LinphoneCoreListener.Lin
     public void registrationState(LinphoneCore linphoneCore, LinphoneProxyConfig linphoneProxyConfig, LinphoneCore.RegistrationState registrationState, String s) {
         Log.e(TAG, "registrationState = " + registrationState.toString());
         if (linphoneCore.getProxyConfigList() == null) {
-          //  statusText.setText("no_account");
+            //  statusText.setText("no_account");
             Log.e("TAG", "\t\t\t\t\tstatusText.setText(getString(R.string.no_account));\n");
         }
 
@@ -173,7 +176,7 @@ public class LinphoneService extends Service implements LinphoneCoreListener.Lin
                             Intent intent = new Intent(LinphoneService.this, SingleCallActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra("isCall", false);
-                            intent.putExtra("userName",linphoneCall.getRemoteAddress().getDisplayName());
+                            intent.putExtra("userName", linphoneCall.getRemoteAddress().getDisplayName());
                             startActivity(intent);
                         } catch (LinphoneCoreException e) {
                             e.printStackTrace();
@@ -186,8 +189,9 @@ public class LinphoneService extends Service implements LinphoneCoreListener.Lin
                         dialog.cancel();
                     }
                 });
-        AlertDialog alert = builder.create();
+        alert = builder.create();
         alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         alert.show();
+
     }
 }

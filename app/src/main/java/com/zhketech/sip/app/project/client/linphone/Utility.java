@@ -17,9 +17,9 @@ package com.zhketech.sip.app.project.client.linphone;
 
 public class Utility {
 
-    private static String username = "1";//yyt
+    private static String username = "7";//yyt
     private static String password = "1";
-    private static String host = "192.168.0.16";//sip.linphone.org
+    private static String host = "192.168.0.60";//sip.linphone.org
 
     public static String getUsername() {
         return username;

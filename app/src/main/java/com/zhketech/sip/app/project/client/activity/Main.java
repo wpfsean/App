@@ -529,6 +529,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                             public void registrationState(LinphoneCore.RegistrationState registrationState) {
                                 if ("RegistrationOk".equals(registrationState.toString())) {
                                     Logutils.i("已注册成功");
+                                } else if ("RegistrationFailed".equals(registrationState.toString())){
+                                    Logutils.i("注册失败");
                                 }
                             }
                         });
@@ -678,8 +680,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 mVibrator.vibrate(200);
                 break;
             case R.id.button_setup:
-//                intent.setClass(mContext, SettingActivity.class);
-//                mContext.startActivity(intent);
+                intent.setClass(mContext, SettingActivity.class);
+                mContext.startActivity(intent);
                 mVibrator.vibrate(200);
                 break;
             case R.id.button_video:
