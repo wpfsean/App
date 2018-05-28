@@ -43,11 +43,19 @@ import com.zhketech.sip.app.project.client.callbacks.RequestVideoSourcesThread;
 import com.zhketech.sip.app.project.client.callbacks.ResolveRtsp;
 import com.zhketech.sip.app.project.client.callbacks.SipRequestCallback;
 import com.zhketech.sip.app.project.client.global.AppConfig;
+import com.zhketech.sip.app.project.client.linphone.LinphoneService;
+import com.zhketech.sip.app.project.client.linphone.PhoneServiceCallBack;
+import com.zhketech.sip.app.project.client.linphone.PhoneVoiceUtils;
+import com.zhketech.sip.app.project.client.linphone.Utility;
 import com.zhketech.sip.app.project.client.service.SendheartService;
 import com.zhketech.sip.app.project.client.utils.Logutils;
 import com.zhketech.sip.app.project.client.utils.PhoneUtils;
 import com.zhketech.sip.app.project.client.utils.SharedPreferencesUtils;
+import com.zhketech.sip.app.project.client.utils.ToastUtils;
 
+
+import org.linphone.core.LinphoneCore;
+import org.linphone.core.LinphoneCoreException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -516,6 +524,25 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
                     if (!TextUtils.isEmpty(sipServer) && !TextUtils.isEmpty(sipName) && !TextUtils.isEmpty(sipPass)) {
 
+                        LinphoneService.addCallBack(new PhoneServiceCallBack() {
+                            @Override
+                            public void registrationState(LinphoneCore.RegistrationState registrationState) {
+                                if ("RegistrationOk".equals(registrationState.toString())) {
+                                    Logutils.i("已注册成功");
+                                }
+                            }
+                        });
+                        Utility.setUsername(sipName);
+                        Utility.setPassword(sipPass);
+                        Utility.setHost(sipServer);
+                        PhoneVoiceUtils.getInstance().setAudiPort(7078);
+                        try {
+                            PhoneVoiceUtils.getInstance().registerUserAuth(Utility.getUsername(), Utility.getPassword(), Utility.getHost());
+                        } catch (LinphoneCoreException e) {
+                            e.printStackTrace();
+                            ToastUtils.showShort("LinphoneCoreException:" + e.toString());
+                        }
+
                     } else {
                         Logutils.i("信息缺失");
                     }
@@ -584,7 +611,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         /**
          * 获取Sip资源列表
          */
-        SipRequestCallback sipRequestCallback = new SipRequestCallback(mContext,"0", new SipRequestCallback.SipListern() {
+        SipRequestCallback sipRequestCallback = new SipRequestCallback(mContext, "0", new SipRequestCallback.SipListern() {
             @Override
             public void getDataListern(List<SipBean> mList) {
                 Message message = new Message();

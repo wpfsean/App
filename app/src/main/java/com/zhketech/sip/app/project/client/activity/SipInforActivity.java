@@ -1,6 +1,7 @@
 package com.zhketech.sip.app.project.client.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,11 +49,20 @@ public class SipInforActivity extends AppCompatActivity implements View.OnClickL
     @BindView(R.id.sip_group_back_layout)
     public ImageButton back;
 
+    @BindView(R.id.voice_intercom_icon_layout)
+    public ImageButton voice_button;
+
+    @BindView(R.id.video_intercom_layout)
+    public ImageButton video_button;
+
     Context mContext;
     SpaceItemDecoration sp;
     public static final String SIP_LIST = "http://192.168.0.60:8080/openapi/localuser/list?{%22syskey%22:%22123456%22}";
     List<SipClient> mList = new ArrayList<>();
+    List<SipClient> adapterList = new ArrayList<>();
     List<SipBean> sipListResources = new ArrayList<>();
+
+    int sip_position = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,15 +74,16 @@ public class SipInforActivity extends AppCompatActivity implements View.OnClickL
         ButterKnife.bind(this);
         mContext = this;
         back.setOnClickListener(this);
+        voice_button.setOnClickListener(this);
+        video_button.setOnClickListener(this);
         int group_id = getIntent().getIntExtra("group_id", 0);
-        sp = new SpaceItemDecoration(10, 10);
+        sp = new SpaceItemDecoration(14, 12);
         if (group_id != 0) {
             SipRequestCallback sipRequestCallback = new SipRequestCallback(mContext, group_id + "", new SipRequestCallback.SipListern() {
                 @Override
                 public void getDataListern(List<SipBean> sipList) {
                     if (sipList != null && sipList.size() > 0) {
                         sipListResources = sipList;
-                        Logutils.i("sipList:" + sipList.size() + "\n" + sipList.toString());
                         getHttpdata();
                     }
                 }
@@ -118,20 +129,40 @@ public class SipInforActivity extends AppCompatActivity implements View.OnClickL
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    SipInforRecyclerViewGridAdapter recyclerViewGridAdapter = new SipInforRecyclerViewGridAdapter(mContext, mList, sipListResources);
-                                    recy.setAdapter(recyclerViewGridAdapter);
-                                    GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3);
-                                    gridLayoutManager.setReverseLayout(false);
-                                    gridLayoutManager.setOrientation(GridLayout.VERTICAL);
-                                    recy.removeItemDecoration(sp);
-                                    recy.addItemDecoration(sp);
-                                    recy.setLayoutManager(gridLayoutManager);
-                                    recyclerViewGridAdapter.setItemClickListener(new SipInforRecyclerViewGridAdapter.MyItemClickListener() {
-                                        @Override
-                                        public void onItemClick(View view, int position) {
-                                            Logutils.i("positon:" + position);
+
+                                    if (adapterList != null && adapterList.size() > 0) {
+                                        adapterList.clear();
+                                    }
+
+                                    for (int i = 0; i < mList.size(); i++) {
+                                        for (int j = 0; j < sipListResources.size(); j++) {
+                                            if (mList.get(i).getUsrname().equals(sipListResources.get(j).getNumber())) {
+                                                SipClient sipClient = new SipClient();
+                                                sipClient.setState(mList.get(i).getState());
+                                                sipClient.setUsrname(mList.get(i).getUsrname());
+                                                adapterList.add(sipClient);
+                                            }
                                         }
-                                    });
+                                    }
+                                    if (adapterList != null && adapterList.size() > 0) {
+                                        SipInforRecyclerViewGridAdapter recyclerViewGridAdapter = new SipInforRecyclerViewGridAdapter(mContext, adapterList);
+                                        recy.setAdapter(recyclerViewGridAdapter);
+                                        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3);
+                                        gridLayoutManager.setReverseLayout(false);
+                                        gridLayoutManager.setOrientation(GridLayout.VERTICAL);
+                                        recy.removeItemDecoration(sp);
+                                        recy.addItemDecoration(sp);
+                                        recy.setLayoutManager(gridLayoutManager);
+                                        recyclerViewGridAdapter.setItemClickListener(new SipInforRecyclerViewGridAdapter.MyItemClickListener() {
+                                            @Override
+                                            public void onItemClick(View view, int position) {
+                                                Logutils.i("positon:" + position);
+                                                sip_position = position;
+                                            }
+                                        });
+                                    } else {
+                                        Logutils.i("adapterList is null");
+                                    }
                                 }
                             });
                         } catch (JSONException e) {
@@ -166,10 +197,31 @@ public class SipInforActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-
-        switch (v.getId()){
+        Intent intent = new Intent(this, SingleCallActivity.class);
+        switch (v.getId()) {
             case R.id.sip_group_back_layout:
                 this.finish();
+                break;
+
+            case R.id.voice_intercom_icon_layout://语音对讲
+
+                intent.putExtra("isCall", true);
+                if (adapterList.get(sip_position) != null)
+                    intent.putExtra("userName", adapterList.get(sip_position).getUsrname());
+                startActivity(intent);
+
+                break;
+            case R.id.video_intercom_layout://可视对讲
+                intent.putExtra("isCall", true);
+
+                if (adapterList != null && adapterList.size() > 0) {
+                    if (adapterList.get(sip_position) != null) {
+                        intent.putExtra("userName", adapterList.get(sip_position).getUsrname());
+                        intent.putExtra("isVideo", true);
+                    }
+                    startActivity(intent);
+                }
+
                 break;
         }
 

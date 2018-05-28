@@ -55,7 +55,15 @@
 
         <receiver android:name=".service.HttpRequest" />
 
-        <activity android:name=".activity.SingleCallActivity" />
+        <service android:name=".rtsp.RtspReceiveService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity
+            android:name=".activity.SingleCallActivity"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape" />
         <activity android:name=".activity.StatusActivity" />
         <activity
             android:name=".activity.SipGroupActivity"
@@ -64,6 +72,7 @@
         <activity android:name=".activity.WellcomeActivity" />
         <activity
             android:name=".activity.MultiScreenActivity"
+            android:launchMode="singleTask"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape" />
         <activity
@@ -76,6 +85,7 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.SipInforActivity"
+            android:launchMode="singleTask"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"></activity>
     </application>

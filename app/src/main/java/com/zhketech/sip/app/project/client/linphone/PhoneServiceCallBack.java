@@ -33,6 +33,16 @@ public abstract class PhoneServiceCallBack {
     }
 
     /**
+     * 向外播打电话
+     */
+    public  void callRing(){
+
+    }
+    public  void callhangup(){
+
+    }
+
+    /**
      * 电话被挂断
      */
     public void callReleased() {

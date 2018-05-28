@@ -104,9 +104,19 @@ public class LinphoneService extends Service implements LinphoneCoreListener.Lin
             }
         }
         if (state == LinphoneCall.State.CallEnd) {
-            Log.i("TAG","end");
             if (null != mPhoneServiceCallBack) {
                 mPhoneServiceCallBack.callReleased();
+            }
+        }
+
+        if (state == LinphoneCall.State.OutgoingRinging) {
+            if (null != mPhoneServiceCallBack) {
+                mPhoneServiceCallBack.callRing();
+            }
+        }
+        if (state == LinphoneCall.State.Error) {
+            if (null != mPhoneServiceCallBack) {
+                mPhoneServiceCallBack.callhangup();
             }
         }
     }

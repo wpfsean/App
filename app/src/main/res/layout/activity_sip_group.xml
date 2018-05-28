@@ -104,7 +104,6 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="38dp"
-            android:clickable="false"
             android:background="@drawable/voice_intercom_icon" />
 
         <ImageButton
@@ -114,7 +113,6 @@
             android:layout_below="@+id/voice_intercom_icon_layout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="13dp"
-            android:clickable="false"
             android:background="@drawable/video_intercom_icon" />
 
 
