@@ -107,7 +107,7 @@ public class LinphoneService extends Service implements LinphoneCoreListener.Lin
             if (null != mPhoneServiceCallBack) {
                 mPhoneServiceCallBack.callReleased();
             }
-            alert.dismiss();
+           // alert.dismiss();
         }
 
         if (state == LinphoneCall.State.OutgoingRinging) {
@@ -119,7 +119,7 @@ public class LinphoneService extends Service implements LinphoneCoreListener.Lin
             if (null != mPhoneServiceCallBack) {
                 mPhoneServiceCallBack.callhangup();
             }
-            alert.dismiss();
+           // alert.dismiss();
 
         }
     }
@@ -164,12 +164,12 @@ public class LinphoneService extends Service implements LinphoneCoreListener.Lin
      */
     private void callIncome(final LinphoneCore linphoneCore, final LinphoneCall linphoneCall) {
         PhoneVoiceUtils.getInstance().toggleSpeaker(true);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("来电：" + linphoneCall.getRemoteAddress().getUserName() + " port:" + linphoneCall.getRemoteAddress().getPort());
-        builder.setMessage("您的好友来电，是否接受通话")
-                .setCancelable(false)
-                .setPositiveButton("接受", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("来电：" + linphoneCall.getRemoteAddress().getUserName() + " port:" + linphoneCall.getRemoteAddress().getPort());
+//        builder.setMessage("您的好友来电，是否接受通话")
+//                .setCancelable(false)
+//                .setPositiveButton("接受", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
                         try {
                             PhoneVoiceUtils.getInstance().toggleSpeaker(false);
                             linphoneCore.acceptCall(linphoneCall);
@@ -181,17 +181,17 @@ public class LinphoneService extends Service implements LinphoneCoreListener.Lin
                         } catch (LinphoneCoreException e) {
                             e.printStackTrace();
                         }
-                    }
-                })
-                .setNegativeButton("拒绝", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        linphoneCore.declineCall(linphoneCall, Reason.None);
-                        dialog.cancel();
-                    }
-                });
-        alert = builder.create();
-        alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        alert.show();
+  //                  }
+//                })
+//                .setNegativeButton("拒绝", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        linphoneCore.declineCall(linphoneCall, Reason.None);
+//                        dialog.cancel();
+//                    }
+//                });
+//        alert = builder.create();
+//        alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+//        alert.show();
 
     }
 }

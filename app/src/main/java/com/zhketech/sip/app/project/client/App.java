@@ -16,7 +16,6 @@ public class App extends Application {
         mMyApplition = this;
         startService(new Intent(ACTION_MAIN).setClass(this, LinphoneService.class));
     }
-
     public static App getInstance() {
         return mMyApplition;
     }

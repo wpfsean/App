@@ -911,7 +911,9 @@ public class MultiScreenActivity extends AppCompatActivity implements View.OnCli
             subList = nextData;
             if (subList != null && subList.size() > 0) {
                 if (subList.size() == 4) {
-                    Logutils.i("4");
+                    for ( VideoBen v:subList){
+                        Logutils.i("vvvvvvvvv----->:"+v.toString());
+                    }
                     showVideoInformation(subList);
                     initPlayer(subList);
                     delayHideLoading(3);
@@ -1047,6 +1049,9 @@ public class MultiScreenActivity extends AppCompatActivity implements View.OnCli
             Logutils.i("sub:" + subList.size());
             if (subList != null && subList.size() > 0) {
                 if (subList.size() == 4) {
+                    for ( VideoBen v:subList){
+                        Logutils.i("vvvvvvvvv----->:"+v.toString());
+                    }
                     Logutils.i("4");
                     showVideoInformation(subList);
                     initPlayer(subList);

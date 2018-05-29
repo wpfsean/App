@@ -227,6 +227,8 @@ public class SipRequestCallback implements Runnable {
                 videoBen.setChannel(videoChannelString);
                 videoBen.setUsername(videoUserNameString);
                 videoBen.setPassword(videoPassWordString);
+
+                Logutils.i("video:"+videoBen.toString());
                 if (sipNumberString.equals(sipStrName)){
                     SipBean sipBen = new SipBean(sipFlageString, sipIdString, sipIpString, sipNameString, sipSentry,
                             sipNumberString, sipStrServer, sipStrName, sipStrPass, videoBen, "",false,"","");

@@ -115,7 +115,8 @@ public class SipGroupResourcesCallback implements Runnable {
 
                     byte[] group_Name = new byte[128];
                     System.arraycopy(vSip, 8, group_Name, 0, 128);
-                    String sipgnameString = new String(group_Name, "GB2312");
+                    int group_name_position = ByteUtils.getPosiotion(group_Name);
+                    String sipgnameString = new String(group_Name,0,group_name_position, "GB2312");
 //
                     byte[] sip_Count = new byte[4];
                     System.arraycopy(vSip, 136, sip_Count, 0, 4);

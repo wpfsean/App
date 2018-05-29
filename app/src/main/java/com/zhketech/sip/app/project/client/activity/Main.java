@@ -534,7 +534,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                                 }
                             }
                         });
-                        Utility.setUsername(sipName);
+                        Utility.setUsername(sipNumber);
                         Utility.setPassword(sipPass);
                         Utility.setHost(sipServer);
                         PhoneVoiceUtils.getInstance().setAudiPort(7078);

@@ -47,6 +47,7 @@ public class SipInforRecyclerViewGridAdapter extends RecyclerView.Adapter<SipInf
     public void onBindViewHolder(SipInforRecyclerViewGridAdapter.GridViewHolder holder, int position) {
         SipClient dateBean = mDateBeen.get(position);
         holder.setData(dateBean);
+
     }
 
     //决定RecyclerView有多少条item

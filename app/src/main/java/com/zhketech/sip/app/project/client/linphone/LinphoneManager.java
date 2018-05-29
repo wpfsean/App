@@ -60,7 +60,7 @@ public class LinphoneManager implements LinphoneCoreListener.LinphoneListener {
     private BroadcastReceiver mKeepAliveReceiver = new KeepAliveReceiver();
 
     protected LinphoneManager(final Context c) {
-        LinphoneCoreFactory.instance().setDebugMode(true, "Wpf--->>>");
+        LinphoneCoreFactory.instance().setDebugMode(false, "Wpf--->>>");
         sExited = false;
         mServiceContext = c;
 

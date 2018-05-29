@@ -96,7 +96,7 @@ public class SipGroupActivity extends AppCompatActivity {
                                     int group_id= mList.get(position).getGroup_id();
                                     Intent intent = new Intent();
                                     intent.putExtra("group_id",group_id);
-                                    intent.setClass(SipGroupActivity.this,SipInforActivity.class);
+                                    intent.setClass(SipGroupActivity.this,SipInfor2Activity.class);
                                     startActivity(intent);
                                 }
                             });

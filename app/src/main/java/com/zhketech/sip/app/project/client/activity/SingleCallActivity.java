@@ -191,13 +191,14 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
                         }
                     }
                 }
-
                 Logutils.i("///");
                 if (isVideo){
                     nodePlayer.setInputUrl(rtsp);
                     nodePlayer.setAudioEnable(false);
                     nodePlayer.setReceiveAudio(false);
                     nodePlayer.start();
+                    initCall(userName);
+                }else {
                     initCall(userName);
                 }
             } else {
@@ -206,8 +207,7 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
         }
 
         if (!isCall){
-            //isCallConnected = true;
-
+            isCallConnected = true;
             threadStart();
             runOnUiThread(new Runnable() {
                 @Override
@@ -215,10 +215,17 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
                     hangupButton.setBackgroundResource(R.drawable.btn_hangup_select);
                 }
             });
-
-
         }
+    }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+      //  bindService(intent, mRtspServiceConnection, Context.BIND_AUTO_CREATE);
+
+        unbindService(mRtspServiceConnection);
     }
 
     private void initView() {
@@ -247,11 +254,7 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
             SharedPreferencesUtils.putObject(mContext,AppConfig.NATIVE_RTSP,RtspAddress);
             Log.i("tag", "地址: " + RtspAddress);
         }
-
-
     }
-
-
     public void initCall(String number){
         PhoneBean bean = new PhoneBean();
         if (!TextUtils.isEmpty(userName)){
@@ -275,6 +278,7 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
 
                 if (isCallConnected){
                     PhoneVoiceUtils.getInstance().hangUp();
+                    show_call_time.setText("00:00");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -310,10 +314,7 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
                 break;
-
             case R.id.btn_volumeadd:
                 mAudioManager.adjustStreamVolume(AudioManager.STREAM_VOICE_CALL, AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
                 break;
@@ -367,9 +368,11 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        show_call_time.setTextSize(36);
+                        show_call_time.setTextSize(22);
                         show_call_time.setText("正在振铃....");
-                        hangupButton.setBackgroundResource(R.drawable.btn_answer_select);
+                        show_call_time.setTextColor(0xffff00ff);
+                        hangupButton.setBackgroundResource(R.drawable.btn_hangup_select);
+                        isCallConnected = true;
 
                     }
                 });
@@ -583,6 +586,7 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
     };
 
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         initCamera();
@@ -676,5 +680,6 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
             }
         }.start();
     }
+
 
 }
