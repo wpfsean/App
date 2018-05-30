@@ -102,6 +102,8 @@ public class SipGroupActivity extends AppCompatActivity {
                             });
                         }
                     });
+                }else {
+                    ToastUtils.showShort("未从服务器上获取到sip数据...");
                 }
             }
             @Override

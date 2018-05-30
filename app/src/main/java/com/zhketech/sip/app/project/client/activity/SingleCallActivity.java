@@ -23,9 +23,11 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -100,6 +102,21 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
     //显示网络状态
     @BindView(R.id.icon_network)
     public ImageView network_pic;
+
+
+    @BindView(R.id.main_player_framelayout)
+    public FrameLayout main_player_framelayout;
+
+    @BindView(R.id.second_player_relativelayout)
+    public RelativeLayout second_player_relativelayout;
+
+    @BindView(R.id.video_relativelayout)
+    public RelativeLayout video_relativelayout;
+
+    @BindView(R.id.text_who_is_calling_information)
+    public TextView text_who_is_calling_information;
+
+
     //显示电量
     @BindView(R.id.icon_electritity_show)
     public ImageView icon_electritity_information;
@@ -118,6 +135,7 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
     //计时的子线程
     Thread mThread = null;
     int num = 0;
+    String native_name ="";
 
     //视频录制的硬编码参数
     private static int queuesize = 10;
@@ -165,6 +183,9 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void initPageData() {
+
+        native_name = (String) SharedPreferencesUtils.getObject(mContext, AppConfig.SIP_NAME_NAVITE, "");
+
         isCall = this.getIntent().getBooleanExtra("isCall", true);//是打电话还是接电话
         userName  = this.getIntent().getStringExtra("userName");//对方号码
         isVideo = this.getIntent().getBooleanExtra("isVideo",false);//是可视频电话，还是语音电话
@@ -193,6 +214,9 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
                 }
                 Logutils.i("///");
                 if (isVideo){
+                    main_player_framelayout.setVisibility(View.VISIBLE);
+                    second_player_relativelayout.setVisibility(View.VISIBLE);
+
                     nodePlayer.setInputUrl(rtsp);
                     nodePlayer.setAudioEnable(false);
                     nodePlayer.setReceiveAudio(false);
@@ -225,7 +249,8 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
 
       //  bindService(intent, mRtspServiceConnection, Context.BIND_AUTO_CREATE);
 
-        unbindService(mRtspServiceConnection);
+       // if (isCall){  unbindService(mRtspServiceConnection);}
+
     }
 
     private void initView() {
@@ -285,6 +310,13 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
                             hangupButton.setBackgroundResource(R.drawable.btn_answer_select);
                         }
                     });
+                    if (nodePlayer != null){
+                        nodePlayer.pause();
+                        nodePlayer.stop();
+                        nodePlayer.release();
+                        nodePlayer = null;
+                    }
+                    SingleCallActivity.this.finish();
                 }
 
                 break;
@@ -360,6 +392,14 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
                 });
                 threadStop();
 
+                if (nodePlayer != null){
+                    nodePlayer.pause();
+                    nodePlayer.stop();
+                    nodePlayer.release();
+                    nodePlayer = null;
+                }
+                SingleCallActivity.this.finish();
+
             }
 
             @Override
@@ -369,8 +409,15 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
                     @Override
                     public void run() {
                         show_call_time.setTextSize(22);
-                        show_call_time.setText("正在振铃....");
-                        show_call_time.setTextColor(0xffff00ff);
+                        if (!isVideo){
+                            show_call_time.setText("00:00");
+
+                            //if (!TextUtils.isEmpty(native_name)){
+                                text_who_is_calling_information.setText("正在与"+userName+"通话");
+                            //}
+                        }
+
+                        show_call_time.setTextColor(0xffDC143C);
                         hangupButton.setBackgroundResource(R.drawable.btn_hangup_select);
                         isCallConnected = true;
 
@@ -386,8 +433,16 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
                         threadStop();
                         hangupButton.setBackgroundResource(R.drawable.btn_answer_select);
                         show_call_time.setText("00:00");
+
                     }
                 });
+                if (nodePlayer != null){
+                    nodePlayer.pause();
+                    nodePlayer.stop();
+                    nodePlayer.release();
+                    nodePlayer = null;
+                }
+                SingleCallActivity.this.finish();
             }
         });
     }

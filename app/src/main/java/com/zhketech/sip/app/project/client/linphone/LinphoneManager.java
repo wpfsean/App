@@ -7,6 +7,8 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Build;
+import android.widget.TableRow;
+
 import com.zhketech.sip.app.project.client.R;
 import org.linphone.core.LinphoneAddress;
 import org.linphone.core.LinphoneCall;
@@ -60,7 +62,7 @@ public class LinphoneManager implements LinphoneCoreListener.LinphoneListener {
     private BroadcastReceiver mKeepAliveReceiver = new KeepAliveReceiver();
 
     protected LinphoneManager(final Context c) {
-        LinphoneCoreFactory.instance().setDebugMode(false, "Wpf--->>>");
+        LinphoneCoreFactory.instance().setDebugMode(true, "Wpf--->>>");
         sExited = false;
         mServiceContext = c;
 

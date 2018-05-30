@@ -9,4 +9,6 @@
     <color name="sip_group_text_color">#31e1f8</color>
     <color name="notline">#929393</color>
     <color name="bg">#2D4A63</color>
+    <color name="who_calling">#31e1f8</color>
+    
 </resources>

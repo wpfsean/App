@@ -183,10 +183,12 @@ public class SipInfor2Activity extends AppCompatActivity implements View.OnClick
                                                 ada.setSeclection(position);
                                                 ada.notifyDataSetChanged();
                                                 Logutils.i("Position:" + position);
-                                                if (mList.get(position).getState().equals("1")) {
+//
+//                                                if (mList.get(position).getState().equals("1")) {
+//                                                    Logutils.i("Position////:" + position);
                                                     selected = position;
-                                                    Logutils.i("selected:" + selected);
-                                                }
+//                                                    Logutils.i("selected:" + selected);
+//                                                }
 
                                             }
                                         });
@@ -221,11 +223,14 @@ public class SipInfor2Activity extends AppCompatActivity implements View.OnClick
                 ToastUtils.showShort("已加载最新数据");
                 break;
             case R.id.video_intercom_layout:
-                intent.putExtra("isCall", true);
+
                 if (adapterList != null && adapterList.size() > 0) {
-                    if (adapterList.get(selected) != null) {
-                        intent.putExtra("userName", adapterList.get(selected).getUsrname());
-                        intent.putExtra("isVideo", true);
+                    intent.putExtra("isCall", true);
+                    if (selected != -1) {
+                        if (adapterList.get(selected) != null) {
+                            intent.putExtra("userName", adapterList.get(selected).getUsrname());
+                            intent.putExtra("isVideo", true);
+                        }
                     }
                     startActivity(intent);
                 }
@@ -233,11 +238,15 @@ public class SipInfor2Activity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.voice_intercom_icon_layout:
 
-                intent.putExtra("isCall", true);
-                if (adapterList.get(selected) != null) {
-                    if (adapterList.get(selected) != null)
-                        intent.putExtra("userName", adapterList.get(selected).getUsrname());
-                    startActivity(intent);
+                if (adapterList != null && adapterList.size() > 0) {
+                    intent.putExtra("isCall", true);
+                    if (selected != -1) {
+                        if (adapterList.get(selected) != null) {
+                            if (adapterList.get(selected) != null)
+                                intent.putExtra("userName", adapterList.get(selected).getUsrname());
+                            startActivity(intent);
+                        }
+                    }
                 }
                 break;
         }

@@ -62,9 +62,26 @@
         android:layout_width="496dp"
         android:layout_height="290dp"
         android:layout_below="@+id/icone_relativtelayout_title"
-        android:background="@drawable/video_bg">
+        android:background="@mipmap/voice_window_bg">
+
+
+        <TextView
+            android:visibility="visible"
+            android:id="@+id/text_who_is_calling_information"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hhhhhhhhhhhhhhhhhh"
+            android:textColor="@color/who_calling"
+            android:textSize="16sp"
+            />
+
 
         <FrameLayout
+            android:id="@+id/main_player_framelayout"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="1dp">
@@ -90,6 +107,8 @@
 
 
         <RelativeLayout
+            android:id="@+id/second_player_relativelayout"
+            android:visibility="gone"
             android:layout_width="166.6dp"
             android:layout_height="93.8dp"
             android:background="@drawable/video_bg"

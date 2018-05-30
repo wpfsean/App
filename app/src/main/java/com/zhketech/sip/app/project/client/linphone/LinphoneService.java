@@ -90,8 +90,8 @@ public class LinphoneService extends Service implements LinphoneCoreListener.Lin
         Log.e(TAG, "callState = " + state.toString());
         if (state == LinphoneCall.State.IncomingReceived) {//有电话打进来
             String str = "有电话打进来了：" + linphoneCall.getRemoteAddress().getPort() + "--" + linphoneCall.getRemoteAddress().getDisplayName();
-            Log.e(TAG, "callState = " + str);
-            ToastUtils.showLong(str);
+          //  Log.e(TAG, "callState = " + str);
+         //   ToastUtils.showLong(str);
             callIncome(linphoneCore, linphoneCall);
             if (null != mPhoneServiceCallBack) {
                 mPhoneServiceCallBack.incomingCall(linphoneCall);
