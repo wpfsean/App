@@ -62,7 +62,7 @@ public class LinphoneManager implements LinphoneCoreListener.LinphoneListener {
     private BroadcastReceiver mKeepAliveReceiver = new KeepAliveReceiver();
 
     protected LinphoneManager(final Context c) {
-        LinphoneCoreFactory.instance().setDebugMode(true, "Wpf--->>>");
+        LinphoneCoreFactory.instance().setDebugMode(false, "Wpf--->>>");
         sExited = false;
         mServiceContext = c;
 
@@ -164,7 +164,7 @@ public class LinphoneManager implements LinphoneCoreListener.LinphoneListener {
             if (versionName == null) {
                 versionName = String.valueOf(mServiceContext.getPackageManager().getPackageInfo(mServiceContext.getPackageName(), 0).versionCode);
             }
-            mLc.setUserAgent("LinphoneAndroid", versionName);
+            mLc.setUserAgent("ZkthApp", versionName);
         } catch (PackageManager.NameNotFoundException e) {
             Log.e(e, "cannot get version name");
         }
@@ -342,7 +342,7 @@ public class LinphoneManager implements LinphoneCoreListener.LinphoneListener {
 
     @Override
     public void callState(LinphoneCore linphoneCore, LinphoneCall linphoneCall, LinphoneCall.State state, String s) {
-        Log.e(TAG, "callState");
+        Log.e(TAG, "callState："+s);
     }
 
     @Override
@@ -377,7 +377,7 @@ public class LinphoneManager implements LinphoneCoreListener.LinphoneListener {
 
     @Override
     public void registrationState(LinphoneCore linphoneCore, LinphoneProxyConfig linphoneProxyConfig, LinphoneCore.RegistrationState registrationState, String s) {
-        Log.e(TAG, "registrationState");
+        Log.e(TAG, "registrationState:"+registrationState.toString());
     }
 
     @Override

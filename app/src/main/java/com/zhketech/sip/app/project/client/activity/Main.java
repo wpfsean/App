@@ -46,6 +46,7 @@ import com.zhketech.sip.app.project.client.global.AppConfig;
 import com.zhketech.sip.app.project.client.linphone.LinphoneService;
 import com.zhketech.sip.app.project.client.linphone.PhoneServiceCallBack;
 import com.zhketech.sip.app.project.client.linphone.PhoneVoiceUtils;
+import com.zhketech.sip.app.project.client.linphone.SipStatusCallBack;
 import com.zhketech.sip.app.project.client.linphone.Utility;
 import com.zhketech.sip.app.project.client.service.SendheartService;
 import com.zhketech.sip.app.project.client.utils.Logutils;
@@ -488,6 +489,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         });
     }
 
+
+
     /**
      * 初始化控件或监听
      */
@@ -505,6 +508,15 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         hideStatusBar();
+
+        LinphoneService.addSipStatusCallBack(new SipStatusCallBack() {
+            @Override
+            public void registrationState(LinphoneCore.RegistrationState registrationState) {
+
+                Logutils.i("infor:"+registrationState.toString());
+            }
+        });
+
     }
 
 

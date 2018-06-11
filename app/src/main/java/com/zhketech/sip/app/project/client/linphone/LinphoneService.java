@@ -35,6 +35,7 @@ public class LinphoneService extends Service implements LinphoneCoreListener.Lin
     private PendingIntent mkeepAlivePendingIntent;
     private static LinphoneService instance;
     private static PhoneServiceCallBack mPhoneServiceCallBack;
+    private static SipStatusCallBack mSipStatusCallBack;
 
     /**
      * 添加服务监听
@@ -43,6 +44,10 @@ public class LinphoneService extends Service implements LinphoneCoreListener.Lin
      */
     public static void addCallBack(PhoneServiceCallBack phoneServiceCallBack) {
         mPhoneServiceCallBack = phoneServiceCallBack;
+    }
+
+    public static void addSipStatusCallBack(SipStatusCallBack sipStatusCallBack) {
+        mSipStatusCallBack = sipStatusCallBack;
     }
 
     @Override
@@ -132,6 +137,12 @@ public class LinphoneService extends Service implements LinphoneCoreListener.Lin
     @Override
     public void registrationState(LinphoneCore linphoneCore, LinphoneProxyConfig linphoneProxyConfig, LinphoneCore.RegistrationState registrationState, String s) {
         Log.e(TAG, "registrationState = " + registrationState.toString());
+
+
+        if (null != mSipStatusCallBack){
+            mSipStatusCallBack.registrationState(registrationState);
+        }
+
         if (linphoneCore.getProxyConfigList() == null) {
             //  statusText.setText("no_account");
             Log.e("TAG", "\t\t\t\t\tstatusText.setText(getString(R.string.no_account));\n");

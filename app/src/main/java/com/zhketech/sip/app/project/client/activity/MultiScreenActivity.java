@@ -45,6 +45,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.nodemedia.NodePlayer;
+import cn.nodemedia.NodePlayerDelegate;
 import cn.nodemedia.NodePlayerView;
 
 /**
@@ -261,6 +262,78 @@ public class MultiScreenActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onResume() {
         super.onResume();
+
+        if (np1 != null){
+            np1.setNodePlayerDelegate(new NodePlayerDelegate() {
+                @Override
+                public void onEventCallback(NodePlayer player, int event, String msg) {
+                    Logutils.i("np1-->>:"+event+"\n"+msg);
+                    if (event == 1003){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                first_show_loadind.setVisibility(View.VISIBLE);
+                                first_show_loadind.setText("正在重新连接");
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        if (np2 != null){
+            np2.setNodePlayerDelegate(new NodePlayerDelegate() {
+                @Override
+                public void onEventCallback(NodePlayer player, int event, String msg) {
+                    Logutils.i("np2-->>:"+event+"\n"+msg);
+                    if (event == 1003){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                second_show_loadind.setVisibility(View.VISIBLE);
+                                second_show_loadind.setText("正在重新连接");
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        if (np3 != null){
+            np3.setNodePlayerDelegate(new NodePlayerDelegate() {
+                @Override
+                public void onEventCallback(NodePlayer player, int event, String msg) {
+                    Logutils.i("np3-->>:"+event+"\n"+msg);
+                    if (event == 1003){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                third_show_loadind.setVisibility(View.VISIBLE);
+                                third_show_loadind.setText("正在重新连接");
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        if (np4 != null){
+            np4.setNodePlayerDelegate(new NodePlayerDelegate() {
+                @Override
+                public void onEventCallback(NodePlayer player, int event, String msg) {
+                    Logutils.i("np4-->>:"+event+"\n"+msg);
+                    if (event == 1003){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                fourth_show_loadind.setVisibility(View.VISIBLE);
+                                fourth_show_loadind.setText("正在重新连接");
+                            }
+                        });
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -1070,12 +1143,16 @@ public class MultiScreenActivity extends AppCompatActivity implements View.OnCli
     public void showLoadingInfor() {
         first_progressbar.setVisibility(View.VISIBLE);
         first_show_loadind.setVisibility(View.VISIBLE);
+        first_show_loadind.setText("Loading...");
         second_progressbar.setVisibility(View.VISIBLE);
         second_show_loadind.setVisibility(View.VISIBLE);
+        second_show_loadind.setText("Loading...");
         third_progressbar.setVisibility(View.VISIBLE);
         third_show_loadind.setVisibility(View.VISIBLE);
+        third_show_loadind.setText("Loading...");
         fourth_progressbar.setVisibility(View.VISIBLE);
         fourth_show_loadind.setVisibility(View.VISIBLE);
+        fourth_show_loadind.setText("Loading...");
     }
 
     /**
