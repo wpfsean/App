@@ -37,7 +37,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
 
         <service
             android:name=".linphone.LinphoneService"
@@ -66,12 +65,10 @@
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.StatusActivity" />
         <activity
             android:name=".activity.SipGroupActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.WellcomeActivity" />
         <activity
             android:name=".activity.MultiScreenActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -90,7 +87,6 @@
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.SipInforActivity"></activity>
     </application>
 
 </manifest>

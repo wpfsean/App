@@ -72,5 +72,9 @@ public class AppConfig {
     //发送报警和申请开箱的服务器的端口
     public static final int  ALERM_PORT = 2000;
 
+    //获取值班室数据
+    public static final String DUTY_ROOM_URL = "http://192.168.0.16/dutyRoomData.php";
+   // public static final String DUTY_ROOM_URL = "https://bjwesk.com/zhketech/dutyRoomData.php";
+
 
 }

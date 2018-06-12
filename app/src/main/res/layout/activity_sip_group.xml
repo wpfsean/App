@@ -117,6 +117,25 @@
             android:clickable="false"
             android:background="@drawable/video_intercom_icon" />
 
+        <ImageButton
+            android:id="@+id/video_calls_duty_room_intercom_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/video_intercom_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/btn_video_calls_duty_room_select" />
+        <ImageButton
+            android:id="@+id/voice_calls_duty_room_intercom_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/video_calls_duty_room_intercom_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/btn_voice_calls_duty_room_select" />
+
+
+
 
         <ImageButton
             android:id="@+id/sip_group_lastpage_layout"
@@ -139,19 +158,17 @@
             android:layout_marginTop="110dp" />
 
 
-
         <ImageButton
             android:id="@+id/sip_group_refresh_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/sip_group_lastpage_layout"
-            android:background="@drawable/sip_group_refresh"
-            android:layout_marginLeft="13dp"
-            android:layout_marginTop="18dp" />
+            android:layout_alignTop="@+id/sip_group_finish_icon"
+            android:layout_toStartOf="@+id/sip_group_nextpage_layout"
+            android:background="@drawable/sip_group_refresh" />
 
 
         <ImageButton
-            android:id="@+id/sip_group_back_layout"
+            android:id="@+id/sip_group_finish_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/sip_group_refresh_layout"

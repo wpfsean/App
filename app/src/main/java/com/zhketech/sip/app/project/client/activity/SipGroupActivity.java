@@ -3,8 +3,8 @@ package com.zhketech.sip.app.project.client.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -12,13 +12,14 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
 import com.zhketech.sip.app.project.client.R;
 import com.zhketech.sip.app.project.client.adapter.RecyclerViewGridAdapter;
-import com.zhketech.sip.app.project.client.beans.SipBean;
-import com.zhketech.sip.app.project.client.beans.SipClient;
 import com.zhketech.sip.app.project.client.beans.SipGroupBean;
 import com.zhketech.sip.app.project.client.callbacks.SipGroupResourcesCallback;
-import com.zhketech.sip.app.project.client.callbacks.SipRequestCallback;
+import com.zhketech.sip.app.project.client.global.AppConfig;
 import com.zhketech.sip.app.project.client.utils.Logutils;
 import com.zhketech.sip.app.project.client.utils.SipHttpUtils;
 import com.zhketech.sip.app.project.client.utils.SpaceItemDecoration;
@@ -30,8 +31,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,14 +39,25 @@ import butterknife.ButterKnife;
  * sip组状态
  */
 
-public class SipGroupActivity extends AppCompatActivity {
+public class SipGroupActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R.id.sip_group_recyclearview)
     public RecyclerView sip_group_recyclearview;
+    @BindView(R.id.sip_group_finish_icon)
+    public ImageButton sip_group_finish_icon;
+    @BindView(R.id.video_calls_duty_room_intercom_layout)
+    public ImageButton video_calls_duty_room_intercom_layout;
+    @BindView(R.id.voice_calls_duty_room_intercom_layout)
+    public ImageButton voice_calls_duty_room_intercom_layout;
+    @BindView(R.id.sip_group_refresh_layout)
+    public ImageButton sip_group_refresh_layout;
+
+
     Context mContext;
     List<SipGroupBean> mList = new ArrayList<>();
     SpaceItemDecoration sp;
     boolean isShowGrouLayout = false;
+    String callNumber = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,21 +74,23 @@ public class SipGroupActivity extends AppCompatActivity {
     }
 
     private void initPageData() {
-
-        getHttpdata();
+        sip_group_finish_icon.setOnClickListener(this);
+        video_calls_duty_room_intercom_layout.setOnClickListener(this);
+        voice_calls_duty_room_intercom_layout.setOnClickListener(this);
+        sip_group_refresh_layout.setOnClickListener(this);
+        getGroupStatusData();
+        getDutyRoomData();
     }
 
-    public void getHttpdata() {
-
+    public void getGroupStatusData() {
         if (mList != null && mList.size() > 0) {
             mList.clear();
         }
-
         SipGroupResourcesCallback sipGroupResourcesCallback = new SipGroupResourcesCallback(new SipGroupResourcesCallback.SipGroupDataCallback() {
             @Override
             public void callbackSuccessData(List<SipGroupBean> dataList) {
-                if (dataList != null && dataList.size()>0){
-                        mList = dataList;
+                if (dataList != null && dataList.size() > 0) {
+                    mList = dataList;
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -87,37 +99,37 @@ public class SipGroupActivity extends AppCompatActivity {
                             GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3);
                             gridLayoutManager.setReverseLayout(false);
                             gridLayoutManager.setOrientation(GridLayout.VERTICAL);
-                            sip_group_recyclearview.addItemDecoration(sp);
+                          //  sip_group_recyclearview.addItemDecoration(sp);
                             sip_group_recyclearview.setLayoutManager(gridLayoutManager);
                             recyclerViewGridAdapter.setItemClickListener(new RecyclerViewGridAdapter.MyItemClickListener() {
                                 @Override
                                 public void onItemClick(View view, int position) {
                                     Logutils.i("positon:" + position);
-                                    int group_id= mList.get(position).getGroup_id();
+                                    int group_id = mList.get(position).getGroup_id();
                                     Intent intent = new Intent();
-                                    intent.putExtra("group_id",group_id);
-                                    intent.setClass(SipGroupActivity.this,SipInfor2Activity.class);
+                                    intent.putExtra("group_id", group_id);
+                                    intent.setClass(SipGroupActivity.this, SipInfor2Activity.class);
                                     startActivity(intent);
                                 }
                             });
                         }
                     });
-                }else {
+                } else {
                     ToastUtils.showShort("未从服务器上获取到sip数据...");
                 }
             }
+
             @Override
             public void callbackFailData(String infor) {
-                if (!TextUtils.isEmpty(infor)){
-                    if (infor.contains("Execption")){
-  //                      ToastUtils.showShort("请求数据异常,未请求到数据");
+                if (!TextUtils.isEmpty(infor)) {
+                    if (infor.contains("Execption")) {
+                        //                      ToastUtils.showShort("请求数据异常,未请求到数据");
                     }
                 }
             }
         });
         sipGroupResourcesCallback.start();
         isShowGrouLayout = true;
-
     }
 
 
@@ -146,4 +158,59 @@ public class SipGroupActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(this, SingleCallActivity.class);
+        switch (v.getId()) {
+            case R.id.sip_group_finish_icon:
+                SipGroupActivity.this.finish();
+                break;
+            case R.id.video_calls_duty_room_intercom_layout:
+
+                if (!TextUtils.isEmpty(callNumber)) {
+                    intent.putExtra("isCall", true);
+                    intent.putExtra("userName", callNumber);
+                    intent.putExtra("isVideo", true);
+                    startActivity(intent);
+                }
+                break;
+            case R.id.voice_calls_duty_room_intercom_layout:
+
+                if (!TextUtils.isEmpty(callNumber)) {
+                    intent.putExtra("isCall", true);
+                    intent.putExtra("userName", callNumber);
+                    intent.putExtra("isVideo", false);
+                    startActivity(intent);
+                }
+
+                break;
+            case R.id.sip_group_refresh_layout:
+                getGroupStatusData();
+                Toast.makeText(SipGroupActivity.this,"已刷新",Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
+
+    private void getDutyRoomData() {
+        SipHttpUtils httpUtils = new SipHttpUtils(AppConfig.DUTY_ROOM_URL, new SipHttpUtils.GetHttpData() {
+            @Override
+            public void httpData(String result) {
+                if (!TextUtils.isEmpty(result)) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        JSONArray jsonArray = jsonObject.getJSONArray("data");
+                        JSONObject data = jsonArray.getJSONObject(0);
+                        String name = data.getString("name");
+                        String number = data.getString("number");
+                        String server = data.getString("server");
+                        if (!TextUtils.isEmpty(number))
+                            callNumber = number;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        httpUtils.start();
+    }
 }

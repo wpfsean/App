@@ -268,7 +268,7 @@ public class MultiScreenActivity extends AppCompatActivity implements View.OnCli
                 @Override
                 public void onEventCallback(NodePlayer player, int event, String msg) {
                     Logutils.i("np1-->>:"+event+"\n"+msg);
-                    if (event == 1003){
+                    if (event == 1003 || event == 1004){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -286,7 +286,7 @@ public class MultiScreenActivity extends AppCompatActivity implements View.OnCli
                 @Override
                 public void onEventCallback(NodePlayer player, int event, String msg) {
                     Logutils.i("np2-->>:"+event+"\n"+msg);
-                    if (event == 1003){
+                    if (event == 1003 || event == 1004){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -304,7 +304,7 @@ public class MultiScreenActivity extends AppCompatActivity implements View.OnCli
                 @Override
                 public void onEventCallback(NodePlayer player, int event, String msg) {
                     Logutils.i("np3-->>:"+event+"\n"+msg);
-                    if (event == 1003){
+                    if (event == 1003 || event == 1004){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -322,7 +322,7 @@ public class MultiScreenActivity extends AppCompatActivity implements View.OnCli
                 @Override
                 public void onEventCallback(NodePlayer player, int event, String msg) {
                     Logutils.i("np4-->>:"+event+"\n"+msg);
-                    if (event == 1003){
+                    if (event == 1003 || event == 1004){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
