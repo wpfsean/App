@@ -708,7 +708,11 @@ public class SingleCallActivity extends AppCompatActivity implements View.OnClic
         parameters.setPreviewFormat(ImageFormat.NV21);
         parameters.setPreviewFrameRate(15);
         parameters.setPreviewSize(Constant.VIDEO_WIDTH, Constant.VIDEO_HEIGHT);
-        mCamera.setParameters(parameters);
+        try {
+            mCamera.setParameters(parameters);
+        }catch (Exception e){
+            Logutils.e("setParameters failed");
+        }
         mCamera.setPreviewCallback(this);
     }
 

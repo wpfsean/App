@@ -131,7 +131,7 @@ public class SipInfor2Activity extends AppCompatActivity implements View.OnClick
             mList.clear();
         }
 
-        SipHttpUtils sipHttpUtils = new SipHttpUtils("http://192.168.0.60:8080/openapi/localuser/list?{%22syskey%22:%22123456%22}", new SipHttpUtils.GetHttpData() {
+        SipHttpUtils sipHttpUtils = new SipHttpUtils(AppConfig.SIP_LIST_URL, new SipHttpUtils.GetHttpData() {
             @Override
             public void httpData(String result) {
                 if (!TextUtils.isEmpty(result)) {
@@ -172,8 +172,6 @@ public class SipInfor2Activity extends AppCompatActivity implements View.OnClick
                                         if (ada != null) {
                                             ada = null;
                                         }
-                                        Logutils.i(adapterList.toString());
-                                        Logutils.i(adapterList.size()+"");
                                         ada = new MyAdapter(mContext);
                                         gridview.setAdapter(ada);
                                         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

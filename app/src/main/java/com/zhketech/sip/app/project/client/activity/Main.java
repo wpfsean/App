@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.zhketech.sip.app.project.client.App;
 import com.zhketech.sip.app.project.client.R;
 import com.zhketech.sip.app.project.client.beans.AlarmBen;
 import com.zhketech.sip.app.project.client.beans.DeviceInfor;
@@ -150,7 +151,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     }
                     if (videoResources != null && videoResources.size() > 0) {
                         for (VideoBen v : videoResources) {
-                            Logutils.i("v:" + v.toString());
+//                            Logutils.i("v:" + v.toString());
                             resolveRtspUrl(v);
                         }
                     } else {
@@ -176,7 +177,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                             rtsp = newUrl;
                         }
                     } else {
-                        rtsp = "rtsp://admin:pass@192.168.0.93:554/H264?ch=1&subtype=1&proto=Onvif";
+                        rtsp = "no data";
                     }
 
                     if (device.isSuporrtPtz() == true) {
@@ -240,7 +241,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                         }
                     } else {
                         //未解析到rtsp时就添加一个默认的rtsp(方便测试)
-                        rtsp1 = "rtsp://admin:pass@192.168.0.93:554/H264?ch=1&subtype=1&proto=Onvif";
+                        rtsp1 = "no data";
                     }
                     if (sipDevice.isSuporrtPtz() == true) {
                         mSipbean.setSuporrtPtz(true);
@@ -401,6 +402,31 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         //初始化一个震动对象
         mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         PhoneUtils.keepScreenOn(mContext, true);
+
+        RequestVideoSourcesThread requestVideoSourcesThread = new RequestVideoSourcesThread(mContext, new RequestVideoSourcesThread.GetDataListener() {
+            @Override
+            public void getResult(List<VideoBen> devices) {
+                Message message = new Message();
+                message.what = AppConfig.VIDEO_SOURCES_FLAGE;
+                message.obj = devices;
+                handler.sendMessage(message);
+            }
+        });
+        new Thread(requestVideoSourcesThread).start();
+
+        /**
+         * 获取Sip资源列表
+         */
+        SipRequestCallback sipRequestCallback = new SipRequestCallback(mContext, "0", new SipRequestCallback.SipListern() {
+            @Override
+            public void getDataListern(List<SipBean> mList) {
+                Message message = new Message();
+                message.what = AppConfig.SIP_SOURCES_FLAGE;
+                message.obj = mList;
+                handler.sendMessage(message);
+            }
+        });
+        new Thread(sipRequestCallback).start();
     }
 
 
@@ -508,9 +534,12 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             public void registrationState(LinphoneCore.RegistrationState registrationState) {
 
                 Logutils.i("infor:"+registrationState.toString());
+                if (registrationState.toString().equals("RegistrationOk")){
+                    AppConfig.REGISTRATIONOK = true;
+                }
             }
         });
-
+        Logutils.i("是否注册成功:"+true);
     }
 
 
@@ -519,7 +548,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
      */
     private void registeSipToServer() {
         String phoneIp = (String) SharedPreferencesUtils.getObject(mContext, AppConfig.IP_NAVITE, "");
-        Logutils.i("phone_ip");
         if (!TextUtils.isEmpty(phoneIp) && phoneIp != "") {
             for (SipBean s : sipResources) {
                 if (s.getIp().equals(phoneIp)) {
@@ -535,6 +563,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                             public void registrationState(LinphoneCore.RegistrationState registrationState) {
                                 if ("RegistrationOk".equals(registrationState.toString())) {
                                     Logutils.i("已注册成功");
+                                    AppConfig.REGISTRATIONOK = true;
                                 } else if ("RegistrationFailed".equals(registrationState.toString())){
                                     Logutils.i("注册失败");
                                 }
@@ -605,30 +634,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         /**
          * 获取Video资源列表
          */
-        RequestVideoSourcesThread requestVideoSourcesThread = new RequestVideoSourcesThread(mContext, new RequestVideoSourcesThread.GetDataListener() {
-            @Override
-            public void getResult(List<VideoBen> devices) {
-                Message message = new Message();
-                message.what = AppConfig.VIDEO_SOURCES_FLAGE;
-                message.obj = devices;
-                handler.sendMessage(message);
-            }
-        });
-        new Thread(requestVideoSourcesThread).start();
-
-        /**
-         * 获取Sip资源列表
-         */
-        SipRequestCallback sipRequestCallback = new SipRequestCallback(mContext, "0", new SipRequestCallback.SipListern() {
-            @Override
-            public void getDataListern(List<SipBean> mList) {
-                Message message = new Message();
-                message.what = AppConfig.SIP_SOURCES_FLAGE;
-                message.obj = mList;
-                handler.sendMessage(message);
-            }
-        });
-        new Thread(sipRequestCallback).start();
 
         startService(new Intent(this, SendheartService.class));
     }

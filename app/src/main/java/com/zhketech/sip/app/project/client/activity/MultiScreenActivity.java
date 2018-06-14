@@ -647,7 +647,11 @@ public class MultiScreenActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.icon_btn9://finish本页面
                 mVibrator.vibrate(200);
-                this.finish();
+                if (np1 != null){
+                    np1.release();
+                    np1 = null;
+                }
+                MultiScreenActivity.this.finish();
 
                 break;
             //四个方向功能键盘
@@ -840,9 +844,9 @@ public class MultiScreenActivity extends AppCompatActivity implements View.OnCli
             listResources = alterSamples;
 //            Logutils.i("list:" + listResources.size());
 //
-//            for (VideoBen v : listResources) {
-//                Logutils.i("v:" + v.toString());
-//            }
+            for (VideoBen v : listResources) {
+                Logutils.i("v:" + v.toString());
+            }
 
             if (listResources != null && listResources.size() > 0) {
                 pm = new PageModel(listResources, 4);

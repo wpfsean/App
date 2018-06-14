@@ -47,7 +47,7 @@ public class AppConfig {
     public static final String NATIVE_RTSP = "native_rtsp";
 
     //服务器ip
-    public static final String IP_SERVER = "192.168.0.16";
+    public static final String IP_SERVER = "19.0.0.28";
 
     //本机的ip
     public static final String IP_NAVITE = "native_ip";
@@ -67,14 +67,19 @@ public class AppConfig {
     public static final String NAME_NATIVE ="name_native";
 
     //发送报警和申请开箱的服务器ip
-    public static final String  ALERM_SERVER = "192.168.0.12";
+    public static final String  ALERM_SERVER = "19.0.0.27";
 
     //发送报警和申请开箱的服务器的端口
     public static final int  ALERM_PORT = 2000;
 
     //获取值班室数据
-    public static final String DUTY_ROOM_URL = "http://192.168.0.16/dutyRoomData.php";
+    public static final String DUTY_ROOM_URL = "http://19.0.0.28/dutyRoomData.php";
    // public static final String DUTY_ROOM_URL = "https://bjwesk.com/zhketech/dutyRoomData.php";
+
+    public static final String SIP_LIST_URL = "http://19.0.0.60:8080/openapi/localuser/list?{%22syskey%22:%22123456%22}";
+
+    //是否注册成功
+    public static boolean  REGISTRATIONOK =false;
 
 
 }

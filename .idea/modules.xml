@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/App.iml" filepath="$PROJECT_DIR$/App.iml" />
+      <module fileurl="file://C:\Users\Root\Desktop\App\App.iml" filepath="C:\Users\Root\Desktop\App\App.iml" />
       <module fileurl="file://C:\Users\Root\Desktop\linphoneTest-master\linphoneTest-master\YYTCallPhoneDemoApplication.iml" filepath="C:\Users\Root\Desktop\linphoneTest-master\linphoneTest-master\YYTCallPhoneDemoApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/nodemediaclient/nodemediaclient.iml" filepath="$PROJECT_DIR$/nodemediaclient/nodemediaclient.iml" />
