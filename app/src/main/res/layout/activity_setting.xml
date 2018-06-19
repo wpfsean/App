@@ -15,24 +15,16 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/show_information_register"
-                android:layout_width="fill_parent"
-                android:layout_height="250dp"
-                android:layout_margin="8dp"
-                android:background="@drawable/register_sip_bg"
-                android:padding="10dp"
-                android:text="" />
-
             <Button
-                android:id="@+id/register_sip"
+                android:id="@+id/setting_center"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/register_sip_bg"
                 android:gravity="center"
-                android:text="手动注册Sip" />
+                android:text="设置中心" />
 
             <Button
                 android:id="@+id/setting_permission"
@@ -43,6 +35,23 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/register_sip_bg"
                 android:text="查看权限信息" />
+
+            <Button
+                android:id="@+id/logout_btn_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="退出登录"
+                android:background="@drawable/register_sip_bg"
+                />
+
+            <TextView
+                android:id="@+id/show_information_register"
+                android:layout_width="fill_parent"
+                android:layout_height="250dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/register_sip_bg"
+                android:padding="10dp"
+                android:text="" />
 
         </LinearLayout>
 

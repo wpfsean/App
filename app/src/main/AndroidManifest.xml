@@ -28,7 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.Main"
+            android:name=".activity.LoginActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape">
             <intent-filter>
@@ -87,6 +87,10 @@
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.Main"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

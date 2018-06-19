@@ -302,6 +302,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.main);
         ButterKnife.bind(this);
         mContext = this;
+        App.addActivity(this);
         //初始化控件
         initPageViewAndListern();
         //判断当前的版本是否大于6.0，用于权限的 申请

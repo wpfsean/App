@@ -1,31 +1,26 @@
 package com.zhketech.sip.app.project.client.activity;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Build;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
+import com.zhketech.sip.app.project.client.App;
 import com.zhketech.sip.app.project.client.R;
 import com.zhketech.sip.app.project.client.global.AppConfig;
-import com.zhketech.sip.app.project.client.utils.Logutils;
 import com.zhketech.sip.app.project.client.utils.PhoneUtils;
 import com.zhketech.sip.app.project.client.utils.SharedPreferencesUtils;
 
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 设置中心界面
@@ -33,8 +28,8 @@ import butterknife.ButterKnife;
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
 
     //手动注册一个sip到服务器
-    @BindView(R.id.register_sip)
-    public Button register_sip;
+    @BindView(R.id.setting_center)
+    public Button setting;
 
     //查看权限按钮
     @BindView(R.id.setting_permission)
@@ -56,6 +51,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
         mContext = this;
+        App.addActivity(this);
         initViewAndListern();
     }
 
@@ -94,7 +90,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
      * 初始化控件
      */
     private void initViewAndListern() {
-        register_sip.setOnClickListener(this);
+        setting.setOnClickListener(this);
         setting_permission.setOnClickListener(this);
         stringBuilder = new StringBuilder();
     }
@@ -133,8 +129,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
 
         switch (view.getId()) {
-            case R.id.register_sip:
-
+            case R.id.setting_center:
+                
 
                 break;
 
@@ -143,6 +139,16 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
         }
     }
+
+
+    @OnClick(R.id.logout_btn_layout)
+    public void  logout(View view){
+
+        SharedPreferencesUtils.clearAll(mContext,"auto");
+
+        App.exit();
+    }
+
 
     @Override
     public void onBackPressed() {
